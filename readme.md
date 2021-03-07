@@ -25,11 +25,11 @@ npm run test
 Dist folder will be compiled when following command is run:
 
 ```
-npm run build-prod
+npm run build
 ```
 
 To access working dev mode with live server reload run command:
 
 ```
-npm run build-dev
+npm run dev
 ```
