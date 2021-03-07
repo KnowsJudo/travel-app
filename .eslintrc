@@ -1,0 +1,20 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest/globals": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "plugins": ["prefer-arrow", "jest"],
+  "rules": {
+    "no-console": "warn",
+    "no-unused-vars": "error",
+    "prefer-arrow/prefer-arrow-functions": "error",
+    "quotes": "warn"
+  }
+}
