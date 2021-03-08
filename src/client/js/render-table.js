@@ -7,10 +7,17 @@ const renderForecast = (forecast, from) => {
   let tableData = "";
 
   for (var i = from; i < forecast.length; i++) {
-    const day = toDayName(new Date(forecast[i].datetime).getDay());
-    tableData = `${tableData}<h4>${day}, ${
-      forecast[i].datetime
-    }</h4>${renderTable(forecast[i])}`;
+    if (forecast[i]) {
+      const day = toDayName(new Date(forecast[i].datetime).getDay());
+      tableData = `${tableData}<h4>${day}, ${
+        forecast[i].datetime
+      }</h4>${renderTable(forecast[i])}`;
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(
+        `tried to read index[${i}] of forecast but could not find data`
+      );
+    }
   }
 
   return tableData;

@@ -14,11 +14,10 @@ const getLocationAndWeather = async (values) => {
   try {
     const coords = await getCoords(values.destination);
     const totalDays = calculateDateDifference(values.toDate);
-    const diffDays =
-      calculateDateDifference(values.toDate, values.fromDate) + 1;
+    const diffDays = calculateDateDifference(values.toDate, values.fromDate);
 
     const result = await getWeather({
-      days: totalDays,
+      days: totalDays + 1,
       lat: coords.lat,
       long: coords.long,
     });
@@ -31,7 +30,7 @@ const getLocationAndWeather = async (values) => {
     }
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("Error processing requests");
+    console.error("Error processing requests", error);
   }
 
   return {

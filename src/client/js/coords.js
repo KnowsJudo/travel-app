@@ -19,6 +19,10 @@ const getCoords = async (locationName) => {
 
     const coordData = await response.json();
 
+    if (coordData.geonames.length < 1) {
+      throw `No locations matched with ${locationName}`;
+    }
+
     location = {
       country: coordData.geonames[0].countryCode,
       lat: coordData.geonames[0].lat,
