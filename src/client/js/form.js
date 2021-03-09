@@ -10,6 +10,7 @@ import { getWeather } from "./weather";
 const getLocationAndWeather = async (values) => {
   let info = "";
   let image = "";
+  let tripLength = "";
 
   try {
     const coords = await getCoords(values.destination);
@@ -27,6 +28,7 @@ const getLocationAndWeather = async (values) => {
     if (forecast.data && forecast.data) {
       info = renderForecast(forecast.data, totalDays - diffDays);
       image = await getImage(values.destination);
+      tripLength = diffDays + 1;
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -36,6 +38,7 @@ const getLocationAndWeather = async (values) => {
   return {
     info,
     image,
+    tripLength,
   };
 };
 

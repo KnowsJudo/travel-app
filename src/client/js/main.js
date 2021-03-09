@@ -6,6 +6,7 @@ import { getLocationAndWeather } from "./form";
 import {
   displayInfo,
   displayImage,
+  displayLength,
   getValues,
   registerReset,
   registerSubmit,
@@ -16,6 +17,7 @@ import {
 const onReset = async () => {
   displayInfo("");
   displayImage("");
+  displayLength("");
   setValues({
     destination: "",
     fromDate: "",
@@ -29,11 +31,13 @@ const onSubmit = async () => {
 
   displayInfo("loading...");
   displayImage(loader);
+  displayLength("");
 
   const result = await getLocationAndWeather(values);
 
   displayInfo(result.info);
   displayImage(result.image);
+  displayLength(result.tripLength);
 };
 
 // Add event listeners to Button Elements

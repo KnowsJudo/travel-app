@@ -12,7 +12,7 @@ const getDefaults = () => {
   const tomorrow = convertDateToBits(dateNow);
 
   return {
-    destination: "sydney opera house",
+    destination: "uluru",
     fromDate: `${today.year}-${today.month}-${today.date}`,
     toDate: `${tomorrow.year}-${tomorrow.month}-${tomorrow.date}`,
   };

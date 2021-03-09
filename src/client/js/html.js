@@ -16,6 +16,16 @@ const displayInfo = (info) => {
   infoContainer.innerHTML = info;
 };
 
+//Sets the length of the trip in days to be displayed
+const displayLength = (tripLength) => {
+  const lengthInfo = document.getElementById("tripLength");
+  if (!tripLength) {
+    lengthInfo.innerHTML = "";
+  } else {
+    lengthInfo.innerHTML = `<h2>Length of trip = ${tripLength} days`;
+  }
+};
+
 // Returns the values in the form
 const getValues = () => {
   const destination = document.getElementById("destination");
@@ -61,6 +71,7 @@ const setValues = (next) => {
 export {
   displayImage,
   displayInfo,
+  displayLength,
   getValues,
   registerSubmit,
   registerReset,
