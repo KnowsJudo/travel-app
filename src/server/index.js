@@ -37,3 +37,5 @@ app.listen(8080, () => {
   // eslint-disable-next-line no-console
   console.log("Travel app spinning up on port 8080!");
 });
+
+module.exports = app;
