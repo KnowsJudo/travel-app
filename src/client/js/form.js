@@ -1,10 +1,9 @@
 /*-- Function to fetch and process all Forecast requests --*/
+import noResult from "../media/No-image.jpg";
 
-import { getCoords } from "./coords";
 import { calculateDateDifference } from "./date";
-import { getImage } from "./image";
 import { renderForecast } from "./render-table";
-import { getWeather } from "./weather";
+import { getData } from "./finalData";
 
 // Parse in geolocation coords
 const getLocationAndWeather = async (values) => {
@@ -13,23 +12,19 @@ const getLocationAndWeather = async (values) => {
   let tripLength = "";
 
   try {
-    const coords = await getCoords(values.destination);
     const totalDays = calculateDateDifference(values.toDate);
     const diffDays = calculateDateDifference(values.toDate, values.fromDate);
 
-    const result = await getWeather({
+    const result = await getData({
       days: totalDays + 1,
-      lat: coords.lat,
-      long: coords.long,
+      dest: values.destination,
     });
 
-    const forecast = await result.json();
+    const data = await result.json();
 
-    if (forecast.data && forecast.data) {
-      info = renderForecast(forecast.data, totalDays - diffDays);
-      image = await getImage(values.destination);
-      tripLength = diffDays + 1;
-    }
+    info = renderForecast(data.forecast, totalDays - diffDays);
+    image = data.image || noResult;
+    tripLength = diffDays + 1;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Error processing requests", error);

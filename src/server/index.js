@@ -2,34 +2,32 @@
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
-const request = require("request");
+const { getCoords } = require("./geonames");
+const { getImage } = require("./pixabay");
+const { getWeather } = require("./weatherbit");
 
 // Constants
 const app = express();
-const weatherKey = "c6966319093248f49e05c88a25469d45";
-const weatherURL = "api.weatherbit.io/v2.0";
 
 // Add Middleware
 app.use(bodyParser.json());
 app.use(express.static("dist"));
 
-// Fetch forecast based on a LAT and LONG, and a number of days
-app.post("/get-weather", (req, res) => {
+app.post("/get-data", async (req, res) => {
+  //Store destination and days data
+  const dest = req.body.dest;
   const days = req.body.days;
-  const lat = req.body.lat;
-  const long = req.body.long;
 
-  const url = `https://${weatherURL}/forecast/daily?days=${days}&lat=${lat}&lon=${long}&key=${weatherKey}`;
+  //Create final data object to send to client
+  try {
+    const coords = await getCoords(dest);
+    const forecast = await getWeather(days, coords.lat, coords.long);
+    const image = await getImage(dest);
 
-  request({ url }, (error, response, body) => {
-    if (error || response.statusCode !== 200) {
-      return res
-        .status(500)
-        .json({ type: "error", message: error && error.message });
-    }
-
-    res.json(JSON.parse(body));
-  });
+    res.json({ forecast, image });
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 // Open server up to Port 8080

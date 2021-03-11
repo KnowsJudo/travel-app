@@ -4,13 +4,25 @@ const request = require("supertest");
 const app = require("../src/server/index");
 
 describe("server endpoints", () => {
-  it("should return the weather data", async () => {
-    const res = await request(app).post("/get-weather").send({
+  it("should return the correct data values", async () => {
+    const res = await request(app).post("/get-data").send({
       days: 2,
-      lat: 36.17,
-      long: -115.14,
+      dest: "las vegas",
     });
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty("city_name", "Las Vegas");
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        forecast: expect.arrayContaining([
+          expect.objectContaining({
+            date: expect.any(String),
+            maxTemp: expect.any(Number),
+            minTemp: expect.any(Number),
+            weather: expect.any(String),
+          }),
+        ]),
+        image: expect.any(String),
+      })
+    );
+    expect(res.body.forecast.length).toBe(2);
   });
 });

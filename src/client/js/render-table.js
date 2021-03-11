@@ -8,9 +8,9 @@ const renderForecast = (forecast, from) => {
 
   for (var i = from; i < forecast.length; i++) {
     if (forecast[i]) {
-      const day = toDayName(new Date(forecast[i].datetime).getDay());
+      const day = toDayName(new Date(forecast[i].date).getDay());
       tableData = `${tableData}<h4>${day}, ${
-        forecast[i].datetime
+        forecast[i].date
       }</h4>${renderTable(forecast[i])}`;
     } else {
       // eslint-disable-next-line no-console
@@ -28,15 +28,15 @@ const renderTable = (dayForecast) => `
 <table class="weather-forecast-table">
 <tbody><tr>
   <td>Maximum temperature:</td>
-  <td>${dayForecast.max_temp}</td>
+  <td>${dayForecast.maxTemp}</td>
 </tr>
 <tr>
   <td>Minimum temperature:</td>
-  <td>${dayForecast.min_temp}</td>
+  <td>${dayForecast.minTemp}</td>
 </tr>
 <tr>
   <td>Weather forecast:</td>
-  <td>${dayForecast.weather.description}</td>
+  <td>${dayForecast.weather}</td>
 </tr></tbody>
 </table>
   `;
